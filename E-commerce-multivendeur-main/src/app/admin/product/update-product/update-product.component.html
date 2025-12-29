@@ -1,0 +1,248 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="page-header-left">
+          <h3>Update Product
+            <small>Multikart Admin panel</small>
+          </h3>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item">
+            <a routerLink="/">
+              <i data-feather="home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            <a routerLink="/products">Products</a>
+          </li>
+          <li class="breadcrumb-item active">Update Product</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Update Product Information</h5>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div *ngIf="isLoading" class="text-center p-5">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Chargement...</span>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="card-body" *ngIf="!isLoading">
+          <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <!-- Nom du produit -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name">Product Name *</label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    formControlName="name" 
+                    class="form-control"
+                    placeholder="Ex: Canapé moderne"
+                    [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+                  />
+                  <div class="invalid-feedback" 
+                       *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+                    Le nom est requis (minimum 3 caractères)
+                  </div>
+                </div>
+              </div>
+
+              <!-- Prix -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="price">Price *</label>
+                  <input 
+                    type="number" 
+                    id="price" 
+                    formControlName="price" 
+                    class="form-control"
+                    placeholder="0.00"
+                    step="0.01"
+                    min="0"
+                    [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
+                  />
+                  <div class="invalid-feedback"
+                       *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+                    Le prix est requis et doit être positif
+                  </div>
+                </div>
+              </div>
+
+              <!-- Catégorie -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="category">Category *</label>
+                  <select 
+                    id="category" 
+                    formControlName="category" 
+                    class="form-control"
+                    [compareWith]="compareCategory"
+                    [class.is-invalid]="productForm.get('category')?.invalid && productForm.get('category')?.touched"
+                  >
+                    <option [ngValue]="null">Sélectionner une catégorie</option>
+                    <option *ngFor="let cat of categories" [ngValue]="cat">
+                      {{ cat.name }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback"
+                       *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched">
+                    La catégorie est requise
+                  </div>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea 
+                    id="description" 
+                    formControlName="description" 
+                    class="form-control"
+                    rows="4"
+                    placeholder="Décrivez votre produit..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Images existantes -->
+              <div class="col-md-12" *ngIf="existingImages.length > 0">
+                <div class="form-group">
+                  <label>Existing Images</label>
+                  <div class="row">
+                    <div class="col-md-2" *ngFor="let img of existingImages; let i = index">
+                      <div class="image-preview-card">
+                        <img [src]="img" alt="Product image" class="img-thumbnail">
+                        <button 
+                          type="button" 
+                          class="btn btn-danger btn-sm remove-btn"
+                          (click)="removeExistingImage(i)"
+                        >
+                          <i class="ti-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Nouvelles images -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="images">Upload New Images</label>
+                  <input 
+                    type="file" 
+                    id="images"
+                    multiple 
+                    accept="image/*" 
+                    (change)="onFileSelected($event)"
+                    class="form-control"
+                  />
+                  <small class="form-text text-muted">
+                    Upload new images (optional). Existing images will be kept unless removed.
+                  </small>
+                </div>
+              </div>
+
+              <!-- Aperçu des nouvelles images -->
+              <div class="col-md-12" *ngIf="imagePreviewUrls.length > 0">
+                <div class="form-group">
+                  <label>New Images Preview</label>
+                  <div class="row">
+                    <div class="col-md-2" *ngFor="let url of imagePreviewUrls; let i = index">
+                      <div class="image-preview-card">
+                        <img [src]="url" alt="Preview" class="img-thumbnail">
+                        <button 
+                          type="button" 
+                          class="btn btn-danger btn-sm remove-btn"
+                          (click)="removeNewImage(i)"
+                        >
+                          <i class="ti-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Checkboxes -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input 
+                      type="checkbox" 
+                      id="nouveautes"
+                      formControlName="nouveautes"
+                      class="form-check-input"
+                    />
+                    <label class="form-check-label" for="nouveautes">
+                      New Product (Nouveauté)
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input 
+                      type="checkbox" 
+                      id="remise"
+                      formControlName="remise"
+                      class="form-check-input"
+                    />
+                    <label class="form-check-label" for="remise">
+                      On Sale (Remise)
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Boutons d'action -->
+              <div class="col-md-12">
+                <div class="form-group">
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary mr-2"
+                    [disabled]="productForm.invalid || isLoading"
+                  >
+                    <span *ngIf="!isLoading">Update Product</span>
+                    <span *ngIf="isLoading">
+                      <span class="spinner-border spinner-border-sm mr-1"></span>
+                      Updating...
+                    </span>
+                  </button>
+                  <button 
+                    type="button" 
+                    class="btn btn-secondary"
+                    (click)="cancel()"
+                    [disabled]="isLoading"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="page-header-left">
+          <h3>Product List
+            <small>Multikart Admin panel</small>
+          </h3>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ol class="breadcrumb pull-right">
+          <li class="breadcrumb-item">
+            <a routerLink="/">
+              <i data-feather="home"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item">Digital</li>
+          <li class="breadcrumb-item active">Product List</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <form class="form-inline search-form search-box">
+            <div class="form-group">
+              <input 
+                class="form-control-plaintext" 
+                type="search" 
+                placeholder="Search.."
+                (input)="onSearch($event)"
+              >
+            </div>
+          </form>
+
+          <a routerLink="/ajouterProduit" class="btn btn-primary mt-md-0 mt-2">
+            Add New Product
+          </a>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div *ngIf="isLoading" class="text-center p-5">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Chargement...</span>
+          </div>
+        </div>
+
+        <!-- No Products Message -->
+        <div *ngIf="!isLoading && filteredProducts.length === 0" class="text-center p-5">
+          <p>Aucun produit trouvé</p>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="row products-admin ratio_asos" *ngIf="!isLoading && filteredProducts.length > 0">
+          <div class="col-xl-3 col-sm-6" *ngFor="let item of filteredProducts">
+            <div class="card">
+              <div class="card-body product-box">
+                <div class="img-wrapper">
+                  <div class="front">
+                    <!-- Afficher la première image du produit -->
+                    <a href="javascript:void(0)">
+                      <img 
+                        [src]="item.images && item.images.length > 0 ? item.images[0] : 'assets/images/no-image.png'" 
+                        [width]="500" 
+                        [height]="500"
+                        class="img-fluid blur-up lazyload bg-img" 
+                        [alt]="item.name"
+                        onerror="this.src='assets/images/no-image.png'"
+                      >
+                    </a>
+                    <div class="product-hover">
+                      <ul>
+                        <li>
+                          <button 
+                            (click)="editProduct(item.id)" 
+                            class="btn" 
+                            type="button" 
+                            title="Modifier"
+                          >
+                            <i class="ti-pencil-alt"></i>
+                          </button>
+                        </li>
+                        <li>
+                          <button 
+                            (click)="delete(item.id)" 
+                            class="btn"
+                            title="Supprimer"
+                          >
+                            <i class="ti-trash"></i>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="product-detail">
+                  <div class="rating">
+                    <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i>
+                  </div>
+                  <a href="javascript:void(0)">
+                    <h6>{{ item.name }}</h6>
+                  </a>
+                  <h4>{{ item.price }} TND</h4>
+                  <h3>{{ item.category?.name }}</h3>
+                  
+                  <!-- Badges pour nouveautés et remises -->
+                  <div class="product-badges mt-2">
+                    <span class="badge badge-success" *ngIf="item.nouveautes">Nouveau</span>
+                    <span class="badge badge-danger" *ngIf="item.remise">Remise</span>
+                  </div>
+
+                  <!-- Image indicators -->
+                  <ul class="color-variant" *ngIf="item.images && item.images.length > 1">
+                    <li 
+                      class="bg-light0" 
+                      *ngFor="let img of item.images.slice(0, 3)"
+                      [title]="'Image ' + (item.images.indexOf(img) + 1)"
+                    ></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

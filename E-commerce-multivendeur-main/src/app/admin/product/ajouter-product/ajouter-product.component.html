@@ -1,0 +1,132 @@
+<div class="product-form-container">
+  <h2>Ajouter un Produit</h2>
+  
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <!-- Nom du produit -->
+    <div class="form-group">
+      <label for="name">Nom du produit *</label>
+      <input 
+        type="text" 
+        id="name" 
+        formControlName="name" 
+        class="form-control"
+        placeholder="Ex: Canapé moderne"
+      />
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" 
+           class="error-message">
+        Le nom est requis (minimum 3 caractères)
+      </div>
+    </div>
+
+    <!-- Prix -->
+    <div class="form-group">
+      <label for="price">Prix *</label>
+      <input 
+        type="number" 
+        id="price" 
+        formControlName="price" 
+        class="form-control"
+        placeholder="0.00"
+        step="0.01"
+        min="0"
+      />
+      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" 
+           class="error-message">
+        Le prix est requis et doit être positif
+      </div>
+    </div>
+
+    <!-- Catégorie -->
+    <div class="form-group">
+      <label for="category">Catégorie *</label>
+      <select 
+        id="category" 
+        formControlName="category" 
+        class="form-control"
+      >
+        <option value="">Sélectionner une catégorie</option>
+        <option *ngFor="let cat of categories" [ngValue]="cat">
+          {{ cat.name }}
+        </option>
+      </select>
+      <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" 
+           class="error-message">
+        La catégorie est requise
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea 
+        id="description" 
+        formControlName="description" 
+        class="form-control"
+        rows="4"
+        placeholder="Décrivez votre produit..."
+      ></textarea>
+    </div>
+
+    <!-- Images -->
+    <div class="form-group">
+      <label for="images">Images *</label>
+      <input 
+        type="file" 
+        id="images"
+        multiple 
+        accept="image/*" 
+        (change)="onFileSelected($event)"
+        class="form-control"
+      />
+      <small class="form-text">Vous pouvez sélectionner plusieurs images</small>
+    </div>
+
+    <!-- Aperçu des images -->
+    <div *ngIf="imagePreviewUrls.length > 0" class="image-preview-container">
+      <div *ngFor="let url of imagePreviewUrls; let i = index" class="image-preview">
+        <img [src]="url" alt="Preview" />
+        <button type="button" (click)="removeImage(i)" class="remove-btn">×</button>
+      </div>
+    </div>
+
+    <!-- Nouveautés -->
+    <div class="form-group checkbox-group">
+      <label>
+        <input 
+          type="checkbox" 
+          formControlName="nouveautes"
+        />
+        Nouveauté
+      </label>
+    </div>
+
+    <!-- Remise -->
+    <div class="form-group checkbox-group">
+      <label>
+        <input 
+          type="checkbox" 
+          formControlName="remise"
+        />
+        En promotion
+      </label>
+    </div>
+
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="productForm.invalid || selectedImages.length === 0"
+      >
+        Ajouter le produit
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-secondary"
+        (click)="resetForm()"
+      >
+        Réinitialiser
+      </button>
+    </div>
+  </form>
+</div>

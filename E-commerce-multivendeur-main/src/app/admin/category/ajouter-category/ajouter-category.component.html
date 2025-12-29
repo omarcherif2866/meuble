@@ -1,0 +1,65 @@
+<div class="product-form-container">
+  <h2>Ajouter un Produit</h2>
+  
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <!-- Nom du produit -->
+    <div class="form-group">
+      <label for="name">Nom du produit *</label>
+      <input 
+        type="text" 
+        id="name" 
+        formControlName="name" 
+        class="form-control"
+        placeholder="Ex: Canapé moderne"
+      />
+      <div *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched" 
+           class="error-message">
+        Le nom est requis (minimum 3 caractères)
+      </div>
+    </div>
+
+
+    <!-- Images -->
+    <div class="form-group">
+      <label for="images">Images *</label>
+      <input 
+        type="file" 
+        id="images"
+        multiple 
+        accept="image/*" 
+        (change)="onFileSelected($event)"
+        class="form-control"
+      />
+      <small class="form-text">Vous pouvez sélectionner plusieurs images</small>
+    </div>
+
+    <!-- Aperçu des images -->
+    <div *ngIf="imagePreviewUrls.length > 0" class="image-preview-container">
+      <div *ngFor="let url of imagePreviewUrls; let i = index" class="image-preview">
+        <img [src]="url" alt="Preview" />
+        <button type="button" (click)="removeImage(i)" class="remove-btn">×</button>
+      </div>
+    </div>
+
+
+
+
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="categoryForm.invalid || selectedImages.length === 0"
+      >
+        Ajouter le produit
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-secondary"
+        (click)="resetForm()"
+      >
+        Réinitialiser
+      </button>
+    </div>
+  </form>
+</div>

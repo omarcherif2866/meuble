@@ -1728,7 +1728,7 @@ body.rtl {
             .counter-box {
                 text-align: right;
                 border-left: none;
-                border-right: 3px solid var(--theme-color);
+                border-right: 3px solid var(--primary);
 
                 img {
                     margin-right: 0;
@@ -1763,7 +1763,7 @@ body.rtl {
                     &.active,
                     &:hover {
                         border-right: none;
-                        border-left: 2px solid var(--theme-color);
+                        border-left: 2px solid var(--primary);
                     }
                 }
             }
@@ -2568,7 +2568,7 @@ body.rtl {
                     &.current {
                         &:after {
                             border-left: 0;
-                            border-right: 17px solid var(--theme-color);
+                            border-right: 17px solid var(--primary);
                         }
                     }
                 }
@@ -4106,7 +4106,7 @@ body {
                 .popup-filter {
                     .sidebar-popup {
                         text-align: center;
-                        background: none var(--theme-color);
+                        background: none var(--primary);
                         border: none;
                     }
                 }

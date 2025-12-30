@@ -1,28 +1,15 @@
-import { Category } from "./category";
-
-
-
-export interface Cart {
-  items:Array<CartItem>;
-}
-
+// src/app/Models/cart.ts
 export interface CartItem {
+  id: number;
   name: string;
   price: number;
   quantity: number;
-  id: string;
-  category: Category;
-  description: string;
-  image: string;
-  vendorId: string;
-  attributes?: any[]; // This property is optional and may not always exist
-  stockAttribute?: any; // Ajoutez cette ligne
-
+  image?: string;
+  category?: string;        // Optionnel
+  description?: string;     // Optionnel
+  vendorId?: number;        // Optionnel
 }
 
-export interface CartData {
-  productId: any; // Vous pouvez utiliser le type approprié pour productId
-  quantity: number;
+export interface Cart {
+  items: CartItem[];
 }
-
-

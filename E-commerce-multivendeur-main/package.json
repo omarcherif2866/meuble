@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@auth0/angular-jwt": "^5.0.2",
     "@googlemaps/js-api-loader": "^1.15.1",
     "@material/radio": "^14.0.0",
     "@material/slider": "^14.0.0",

@@ -58,14 +58,13 @@ submit() {
     password: this.form.value.password,
   };
 
-  this.service.signIn(t).subscribe(
+  this.service.login(t).subscribe(
     (data) => {
       this.user = data;
-      localStorage.setItem('user_id', data.id); // Store user ID
-      localStorage.setItem('user_roles', this.user.roles);
       console.log('User ID:', data.id);
       console.log('User ID stored in localStorage:', localStorage.getItem('user_id'));
-      console.log('User Roles:', this.user.roles);
+      console.log('User Roles:', this.user.role);
+      console.log('User :', data);
 
       // Update the logged-in status
       this.service.setLoggedIn(true);
@@ -75,14 +74,9 @@ submit() {
       Emitters.authEmitter2.emit(true);
 
       console.log('User is logged in');
-      // Check user's role based on the roles string
-      if (this.user.roles === 'vendeur') {
-        this.router.navigate([`dashboardVendeur/${localStorage.getItem('user_id')}`]);
-      } else if (this.user.roles === 'client') {
-         this.router.navigate(['/accueil'])
-      } else {
-        console.log('Unknown role');
-      }
+
+      this.router.navigate(['/accueil'])
+
     },
     (error) => {
       this.toastr.error('check your email or password');

@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Integer id, User user){
+    public User updateUser(Long id, User user){
         User existingUSer = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("user not found"));
 
@@ -63,14 +63,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserEntityById(Integer id) {
+    public void deleteUserEntityById(Long id) {
         userRepository.deleteById(id);
 
     }
 
 
     @Override
-    public User getUserById(Integer id) {
+    public User getUserById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.orElse(null);
     }
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void blockUser(Integer userId) {
+    public void blockUser(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         userOptional.ifPresent(user -> {
             user.setBlocked(true);
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void unblockUser(Integer userId) {
+    public void unblockUser(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         userOptional.ifPresent(user -> {
             user.setBlocked(false);
@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(Integer id, String oldPassword, String newPassword) {
+    public void changePassword(Long id, String oldPassword, String newPassword) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
@@ -192,7 +192,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void resetPassword(String userId, String newPassword) {
+    public void resetPassword(Long userId, String newPassword) {
         // Vérifier que le code a été vérifié
         VerificationData verificationData = verificationCodes.get(userId);
 
@@ -207,7 +207,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // Récupérer l'utilisateur
-        User user = userRepository.findById(Integer.parseInt(userId))
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé."));
 
         // Valider le nouveau mot de passe

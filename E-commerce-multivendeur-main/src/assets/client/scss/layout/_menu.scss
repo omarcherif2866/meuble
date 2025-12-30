@@ -258,7 +258,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
 
     i {
         font-size: 24px;
-        color: var(--theme-color);
+        color: var(--primary);
         opacity: 0.6;
     }
 }
@@ -273,7 +273,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
 
 .new-tag {
     padding-left: 3px;
-    color: var(--theme-color);
+    color: var(--primary);
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 700;
@@ -286,7 +286,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
         position: absolute;
         top: -5px;
         right: -10px;
-        color: var(--theme-color);
+        color: var(--primary);
         font-size: 12px;
         font-weight: 700;
     }
@@ -332,7 +332,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
         }
 
         &:hover {
-            color: var(--theme-color);
+            color: var(--primary);
         }
 
         &.disabled {
@@ -415,7 +415,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
     }
 
     .icon-trend {
-        color: var(--theme-color);
+        color: var(--primary);
     }
 
     .full-mega-menu,
@@ -550,7 +550,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
 
     .lable-nav {
         position: absolute;
-        background-color: var(--theme-color);
+        background-color: var(--primary);
         padding: 2px 7px;
         color: $white;
         top: 20px;
@@ -566,7 +566,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
             height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-            border-top: 5px solid var(--theme-color);
+            border-top: 5px solid var(--primary);
             top: 15px;
             left: 22px;
         }
@@ -716,7 +716,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
                 top: -8px;
                 right: 0px;
                 color: white;
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 padding: 2px 7px;
                 text-transform: uppercase;
                 font-size: 9px;
@@ -896,7 +896,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
                     content: "";
                     height: 2px;
                     width: 0;
-                    background-color: var(--theme-color);
+                    background-color: var(--primary);
                     transition: 0.5s ease;
                 }
 
@@ -1321,7 +1321,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
                         font-weight: 400;
 
                         &:hover {
-                            color: var(--theme-color);
+                            color: var(--primary);
                             font-size: 14px;
                             padding: 5px 35px;
                         }

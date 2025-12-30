@@ -185,7 +185,7 @@ body {
         .breadcrumb-item {
             a {
                 .feather {
-                    stroke: var(--theme-color);
+                    stroke: var(--primary);
                 }
             }
         }
@@ -573,7 +573,7 @@ body {
 
             &:hover {
                 h4 {
-                    color: var(--theme-color);
+                    color: var(--primary);
                 }
             }
         }

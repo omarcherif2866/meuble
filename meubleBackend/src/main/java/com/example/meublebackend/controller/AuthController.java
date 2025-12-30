@@ -115,7 +115,7 @@ import java.util.Map;
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
 
                 // Default values
-                user.setRole(Role.SIMPLEU);
+                user.setRole(Role.client);
                 user.setBlocked(false);
 
                 User savedUser = userRepository.save(user);
@@ -133,7 +133,7 @@ import java.util.Map;
 
 
         @PutMapping("/{id}")
-        public User updateUserPut(@PathVariable Integer id , @RequestBody User user)
+        public User updateUserPut(@PathVariable Long id , @RequestBody User user)
         {
             return userService.updateUser(id,user);
         }
@@ -169,15 +169,28 @@ import java.util.Map;
         @PostMapping("/reset")
         public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
             try {
-                String userId = request.get("userId");
+                // Récupérer le userId en String et le convertir en Long
+                String userIdStr = request.get("userId");
+                if (userIdStr == null) {
+                    return ResponseEntity.badRequest().body(Map.of("message", "userId est requis."));
+                }
+                Long userId = Long.parseLong(userIdStr);
+
                 String newPassword = request.get("newPassword");
+                if (newPassword == null || newPassword.isEmpty()) {
+                    return ResponseEntity.badRequest().body(Map.of("message", "newPassword est requis."));
+                }
+
                 userService.resetPassword(userId, newPassword);
                 return ResponseEntity.ok(Map.of("message", "Mot de passe réinitialisé avec succès."));
+            } catch (NumberFormatException e) {
+                return ResponseEntity.badRequest().body(Map.of("message", "userId invalide."));
             } catch (IllegalArgumentException e) {
                 return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
             } catch (Exception e) {
                 return ResponseEntity.status(500).body(Map.of("message", "Erreur lors de la réinitialisation."));
             }
         }
+
 
 }

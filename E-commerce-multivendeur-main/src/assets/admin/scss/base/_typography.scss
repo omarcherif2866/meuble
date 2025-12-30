@@ -18,7 +18,7 @@ h1 {
     span {
         font-size: 107px;
         font-weight: 700;
-        color: var(--theme-color);
+        color: var(--primary);
     }
 }
 
@@ -117,13 +117,13 @@ label {
 }
 
 .text-theme {
-    color: var(--theme-color) !important;
+    color: var(--primary) !important;
 }
 
 .form-check-input {
     &:checked {
-        background-color: var(--theme-color);
-        border-color: var(--theme-color);
+        background-color: var(--primary);
+        border-color: var(--primary);
     }
 }
 

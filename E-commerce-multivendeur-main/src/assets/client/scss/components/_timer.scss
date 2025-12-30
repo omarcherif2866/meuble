@@ -17,7 +17,7 @@
             text-align: center;
 
             span {
-                color: var(--theme-color);
+                color: var(--primary);
             }
         }
     }
@@ -66,7 +66,7 @@
 
     .timer {
         margin-top: 0;
-        background-color: var(--theme-color);
+        background-color: var(--primary);
 
         span {
             .timer-cal {

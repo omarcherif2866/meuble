@@ -102,6 +102,10 @@
                         <br>
                         <br>
 
+                          <a (click)="ajouterAuPanier()" class="btn btn-primary">
+                            <i class="fa fa-shopping-cart me-2"></i>Ajouter au panier
+                          </a>
+
                         <h3 class="price-detail"  >totale j'aime <span> </span></h3>
 
                         <a  class="btn btn-solid">{{countlike}}</a>
@@ -172,7 +176,7 @@
                       <li class="row"><strong class="col-6">Categorie :</strong> <span class="col-6">{{ (category$ | async)?.name }}</span></li>
                       <li class="row"><strong class="col-6">Description :</strong> <span class="col-6">{{data.description}}</span></li>
                       <li class="row"><strong class="col-6">Caractéristiques :</strong></li>
-                      <div *ngFor="let attributeSet of data.attributeSets">
+                      <!-- <div *ngFor="let attributeSet of data.attributeSets">
                         <ul>
                           <li *ngFor="let attribute of attributeSet" class="row">
                             <strong class="col-6">{{ attribute.name }}:</strong>
@@ -191,7 +195,7 @@
                             </ng-template>
                           </li>
                         </ul>
-                      </div>
+                      </div> -->
                       <li class="row"><strong class="col-6">Prix :</strong> <span class="col-6">{{data.price}} Dt</span></li>
                     </ul>
                   </div>

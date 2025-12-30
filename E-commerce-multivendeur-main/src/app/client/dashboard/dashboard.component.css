@@ -14,3 +14,100 @@
   max-width: 100%;
   height: auto;
 }
+/* =========================
+   SECTION CATEGORIES
+========================= */
+.category-section {
+  padding-top: 5px;       /* espace réduit en haut */
+  padding-bottom: 70px;   /* espace augmenté en bas */
+  /* background-color: var(--light); */
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.category-circle-container {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   CERCLE CATEGORIE
+========================= */
+.category-circle {
+  width: 130px;
+  height: 130px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Ombre élégante */
+.category-circle:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   IMAGE
+========================= */
+.category-image {
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* =========================
+   NOM CATEGORIE
+========================= */
+.category-name {
+  position: absolute;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dark);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-transform: capitalize;
+  text-align: center;
+  padding: 10px;
+}
+
+/* =========================
+   HOVER EFFECT
+========================= */
+.category-circle:hover .category-image {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.category-circle:hover .category-name {
+  opacity: 1;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .category-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .category-name {
+    font-size: 14px;
+  }
+
+  .category-section {
+    padding-top: 0;
+    padding-bottom: 40px;
+  }
+}

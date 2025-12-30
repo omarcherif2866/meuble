@@ -1,98 +1,118 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from 'src/app/Models/user';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedInSubject: BehaviorSubject<boolean>;
-  private previousUrl: string = '/'; // Initialisez l'URL précédente avec '/' par défaut
+  private apiUrl = "http://localhost:9090/api/auth";
+  private apiUrlUser = "http://localhost:9090/users";
 
-  constructor(private http: HttpClient, private router: Router) {
-    // Initialisez le BehaviorSubject à false ou à la valeur stockée dans localStorage
-    const storedLoggedIn = localStorage.getItem('loggedIn');
-    this.loggedInSubject = new BehaviorSubject<boolean>(storedLoggedIn ? JSON.parse(storedLoggedIn) : false);
+  private localStorageKey = "userAuth";   // stockage principal
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  private jwtHelper = new JwtHelperService();
 
+  constructor(private httpClient: HttpClient) {
 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.previousUrl = this.router.url;
-      }
-    });
+    const userData = localStorage.getItem(this.localStorageKey);
+    if (userData) {
+      const parsed = JSON.parse(userData);
+      this.loggedIn.next(!!parsed.accessToken);
+    }
   }
 
-  createAcount(data:any){
-    return this.http.post<User>("http://localhost:9090/api/signup",data)
+  isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
-
-
-  signIn(credentials: any): Observable<User> {
-    return this.http.post<User>("http://localhost:9090/api/signin", credentials).pipe(
-      tap((user) => {
-        // Mettez à jour l'état de connexion à true dès que l'utilisateur se connecte avec succès
-        this.setLoggedIn(true);
-        // Enregistrez l'URL précédente avant de rediriger l'utilisateur
-        this.previousUrl = this.getPreviousUrl();
-        // Redirigez l'utilisateur vers la page précédente ou la page d'accueil après une connexion réussie
-        if (this.previousUrl && !this.previousUrl.includes('/register')) {
-          this.router.navigateByUrl(this.previousUrl);
-        } else {
-          this.router.navigateByUrl('/');
-        }
+  // -------------------- LOGIN --------------------
+  login(loginData: { email: string; password: string }): Observable<any> {
+    return this.httpClient.post<any>(`${this.apiUrl}/login`, loginData).pipe(
+      tap(response => {
+        localStorage.setItem(this.localStorageKey, JSON.stringify(response));
+        this.loggedIn.next(true);
+      }),
+      catchError(error => {
+        console.error("Erreur de connexion:", error);
+        return throwError(() => error);
       })
     );
   }
-  
 
-  // getRoles() {
-  //   return this.http.get<Role[]>("http://localhost:9090/role/roles");
-  // }
+  // -------------------- LOGOUT --------------------
+logout(): void {
+  // Déclarer toutes les clés à supprimer
+  const keysToRemove = ['userAuth', 'accessToken', 'userId', 'userRole'];
 
-  getUser(data:any) {
-    return this.http.get<User[]>("http://localhost:9090/api/user");
+  // Boucler et supprimer chaque clé
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+
+  // Mettre à jour l'état de connexion
+  this.loggedIn.next(false);
+}
+
+
+  // -------------------- REGISTER --------------------
+  addUser(user: any): Observable<User> {
+      console.log('Sending to backend:', user);
+    return this.httpClient.post<User>(`${this.apiUrl}/register`, user);
   }
 
-  setLoggedIn(status: boolean) {
-    this.loggedInSubject.next(status); // Mettez à jour l'état de connexion avec le BehaviorSubject
-    // Stockez également l'état de connexion dans le localStorage
-    localStorage.setItem('loggedIn', JSON.stringify(status));
+  // -------------------- TOKEN --------------------
+  getToken(): string | null {
+    const userData = localStorage.getItem(this.localStorageKey);
+    return userData ? JSON.parse(userData).accessToken : null;
   }
 
-  isLoggedIn(): Observable<boolean> {
-    return this.loggedInSubject.asObservable(); // Retournez le BehaviorSubject en tant qu'Observable
+  getRoleFromToken(): string {
+    const token = this.getToken();
+    if (!token) return "vide";
+    const decoded = this.jwtHelper.decodeToken(token);
+    return decoded?.role || "";
   }
 
-  getPreviousUrl(): string {
-    return this.previousUrl;
+  // -------------------- USER ID --------------------
+  getUserIdFromToken(): number | null {
+    const token = this.getToken();
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      const decoded = this.jwtHelper.decodeToken(token);
+      return decoded?.id || null;
+    }
+    return null;
   }
 
-  getUserProfile(id:any) {
-    return this.http.get('http://localhost:9090/api/user/'+id)
+  storeUserIdFromToken(): void {
+    const id = this.getUserIdFromToken();
+    if (id !== null) {
+      localStorage.setItem('userId', id.toString());
+    }
   }
 
-  logout(): void {
-    this.setLoggedIn(false); // Définissez loggedIn sur false
-    localStorage.removeItem('loggedIn'); // Supprimez l'état de connexion du localStorage
-    this.router.navigateByUrl('/login'); // Redirigez l'utilisateur vers la page de connexion
+  getUserId(): number | null {
+    const id = localStorage.getItem('userId');
+    return id ? Number(id) : null;
   }
-  
 
-  updateUserProfile(id: string, formData: FormData ): Observable<User> {
-    // const token = localStorage.getItem("token");
-    // if (!token) {
-    //   throw new Error('No token provided!'); // Gérer le cas où le token est manquant ou invalide
-    // }
-
-    // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    // const url = `http://localhost:9090/api/user//profile/${id}`;
-
-    return this.http.put<User>(`http://localhost:9090/api/user/profile/${id}`, formData);
+  // -------------------- UPDATE USER --------------------
+  updateUserProfile(id: any, user: any): Observable<User> {
+    return this.httpClient.put<User>(`${this.apiUrl}/${id}`, user, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    });
   }
+
+getUserProfile(id: any): Observable<User> {
+  return this.httpClient.get<User>(`${this.apiUrlUser}/${id}`);
+}
+
+changePassword(id: any, data: any): Observable<any> {
+  return this.httpClient.put(`${this.apiUrlUser}/change-password/${id}`, data);
+}
+
 
   updateUserPassword(id: any, password: string, newPassword: string): Observable<any> {
     const data = {
@@ -100,12 +120,30 @@ export class AuthService {
       newpassword: newPassword
     };
   
-    return this.http.put<any>(`http://localhost:9090/api/user/password/${id}`, data);
+    return this.httpClient.put<any>(`http://localhost:9090/api/user/password/${id}`, data);
   }
 
-  resetPassword(data:any){
-    return this.http.post('http://localhost:9090/api/user/getforgot-password',data)
-
+ forgotPassword(email: string): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/forgot`, { email });
   }
-  
+
+  // Vérifier le code
+  verifyCode(userId: string, code: string): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/verify-code`, { userId, code });
+  }
+
+  // Réinitialiser le mot de passe
+  resetPassword(userId: string, newPassword: string): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/reset`, { userId, newPassword });
+  }
+
+    setLoggedIn(status: boolean) {
+    this.loggedIn.next(status); // Mettez à jour l'état de connexion avec le BehaviorSubject
+    // Stockez également l'état de connexion dans le localStorage
+    localStorage.setItem('loggedIn', JSON.stringify(status));
+  }
+
 }
+
+  
+

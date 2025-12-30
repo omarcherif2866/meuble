@@ -19,13 +19,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class UserPrinciple implements UserDetails {
-    private Integer id;
+    private Long id;
     private String username;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private Role role;
-    public UserPrinciple(Integer id, String username, String email,
+    public UserPrinciple(Long id, String username, String email,
                          String password, Collection<? extends GrantedAuthority> authorities, Role role) {
         this.id = id;
         this.username = username;
@@ -50,7 +50,7 @@ public class UserPrinciple implements UserDetails {
                 user.getEmail(), user.getPassword(), authorities);
     } */
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 

@@ -18,7 +18,7 @@
 
     &:before,
     &:after {
-        background: var(--theme-color);
+        background: var(--primary);
         width: 25%;
         position: absolute;
         content: "";
@@ -44,7 +44,7 @@
 
         &:before,
         &:after {
-            background: var(--theme-color);
+            background: var(--primary);
             width: 25%;
             position: absolute;
             content: "";
@@ -97,7 +97,7 @@
     &:after {
         position: absolute;
         content: "";
-        background: linear-gradient(-180deg, var(--theme-color) 0%, var(--theme-color2) 99%);
+        background: linear-gradient(-180deg, var(--primary) 0%, var(--theme-color2) 99%);
         width: 100%;
         height: 100%;
         top: 0;
@@ -125,7 +125,7 @@
     padding-right: 15px;
 
     h4 {
-        color: var(--theme-color);
+        color: var(--primary);
         margin-top: 25px;
         line-height: 1;
         margin-bottom: 0;
@@ -143,7 +143,7 @@
         transition: all 0.5s ease;
 
         &:hover {
-            color: var(--theme-color);
+            color: var(--primary);
             transition: all 0.5s ease;
         }
     }

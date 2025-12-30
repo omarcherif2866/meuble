@@ -87,7 +87,7 @@
                         transition: all 0.5s ease;
 
                         &:hover {
-                            color: var(--theme-color);
+                            color: var(--primary);
                             transition: all 0.5s ease;
                         }
                     }
@@ -264,7 +264,7 @@
 
 .cart_qty_cls {
     position: absolute;
-    background: var(--theme-color);
+    background: var(--primary);
     width: 20px;
     height: 20px;
     color: #fff;

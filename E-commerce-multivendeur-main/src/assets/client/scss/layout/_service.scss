@@ -23,7 +23,7 @@
         height: 60px;
 
         path {
-            fill: var(--theme-color);
+            fill: var(--primary);
         }
     }
 
@@ -49,7 +49,7 @@
         }
 
         h4 {
-            color: var(--theme-color);
+            color: var(--primary);
             transition: all 0.3s ease;
         }
     }
@@ -69,7 +69,7 @@
         height: 60px;
 
         path {
-            fill: var(--theme-color);
+            fill: var(--primary);
         }
     }
 
@@ -92,7 +92,7 @@
         }
 
         h4 {
-            color: var(--theme-color);
+            color: var(--primary);
             transition: all 0.3s ease;
         }
     }
@@ -163,7 +163,7 @@
             }
 
             .media {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
             }
 
             svg {

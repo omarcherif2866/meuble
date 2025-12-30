@@ -252,7 +252,7 @@
 
         .setting_buttons {
             .setting_btn {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 color: white;
                 width: 100%;
             }
@@ -406,7 +406,7 @@
 .demo-section {
     .title-text {
         h3 {
-            color: var(--theme-color);
+            color: var(--primary);
             margin-bottom: 24px;
             display: inline-block;
             padding-bottom: 5px;
@@ -457,7 +457,7 @@
                     justify-content: center;
 
                     span {
-                        background-color: var(--theme-color);
+                        background-color: var(--primary);
                         border-radius: 4px;
                         color: $white;
                         font-size: 13px;
@@ -478,12 +478,12 @@
                         border: 1px solid #ddd;
                         background-color: white;
                         width: 90px;
-                        color: var(--theme-color);
+                        color: var(--primary);
                         padding: 5px 10px;
                         border-radius: 30px;
 
                         &:hover {
-                            background-color: var(--theme-color);
+                            background-color: var(--primary);
                             color: white;
                         }
                     }

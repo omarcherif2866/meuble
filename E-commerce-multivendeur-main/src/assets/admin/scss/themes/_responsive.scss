@@ -1395,7 +1395,7 @@
                 align-items: self-start !important;
                 padding-bottom: calc(20px + (40 - 20) * ((100vw - 320px) / (1920 - 320))) !important;
                 border-top: unset !important;
-                border-left: 4px solid var(--theme-color) !important;
+                border-left: 4px solid var(--primary) !important;
 
                 h5 {
                     font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));

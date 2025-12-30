@@ -325,7 +325,7 @@ header {
 
     &.header-6 {
         .top-header {
-            background-color: var(--theme-color);
+            background-color: var(--primary);
 
             .header-contact {
                 li {
@@ -472,7 +472,7 @@ header {
             background-color: transparent;
 
             .container {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
             }
 
             .header-contact {
@@ -500,7 +500,7 @@ header {
         .logo-menu-part {
             >.container {
                 background-color: $white;
-                border-bottom: 2px solid var(--theme-color);
+                border-bottom: 2px solid var(--primary);
             }
         }
 
@@ -576,8 +576,8 @@ header {
 
     &.green-gradient {
         .top-header {
-            background: var(--theme-color);
-            background-image: linear-gradient(to right, var(--theme-color), var(--theme-color2));
+            background: var(--primary);
+            background-image: linear-gradient(to right, var(--primary), var(--theme-color2));
 
             .header-contact {
                 padding: 10px 0;
@@ -610,8 +610,8 @@ header {
         .pixelstrap {
             li {
                 .lable-nav {
-                    background: var(--theme-color);
-                    background-image: linear-gradient(to right, var(--theme-color), var(--theme-color2));
+                    background: var(--primary);
+                    background-image: linear-gradient(to right, var(--primary), var(--theme-color2));
                 }
             }
         }
@@ -1002,7 +1002,7 @@ header {
 
     &.video-header {
         .top-header {
-            background-color: var(--theme-color);
+            background-color: var(--primary);
 
             .header-contact {
                 padding: 10px 0;
@@ -1158,7 +1158,7 @@ header {
         }
 
         .top-header {
-            background-color: var(--theme-color);
+            background-color: var(--primary);
 
             .header-contact {
                 li {
@@ -1396,7 +1396,7 @@ header {
             padding-right: 25px;
 
             i {
-                color: var(--theme-color);
+                color: var(--primary);
                 padding-left: 10px;
                 transform: rotateY(180deg);
             }
@@ -1439,7 +1439,7 @@ header {
 
                 &:hover {
                     i {
-                        color: var(--theme-color);
+                        color: var(--primary);
                         transition: all 0.5s ease;
                     }
                 }
@@ -1447,7 +1447,7 @@ header {
 
             &:hover {
                 i {
-                    color: var(--theme-color);
+                    color: var(--primary);
                     transition: all 0.5s ease;
                 }
             }
@@ -1499,7 +1499,7 @@ header {
 
                     &:hover {
                         i {
-                            color: var(--theme-color);
+                            color: var(--primary);
                         }
                     }
                 }
@@ -1533,7 +1533,7 @@ header {
 
                     &:hover {
                         i {
-                            color: var(--theme-color);
+                            color: var(--primary);
                         }
                     }
                 }
@@ -1567,7 +1567,7 @@ header {
 
                     &:hover {
                         i {
-                            color: var(--theme-color);
+                            color: var(--primary);
                         }
                     }
                 }
@@ -1687,7 +1687,7 @@ header {
                     display: flex;
                     align-items: center;
                     padding: 12px;
-                    background-color:var(--theme-color);
+                    background-color:var(--primary);
                     color: white;
                     border-radius: 5px;
                 }
@@ -1779,7 +1779,7 @@ header {
                                     font-weight: 700;
 
                                     &:hover {
-                                        color: var(--theme-color);
+                                        color: var(--primary);
                                     }
                                 }
 
@@ -1840,7 +1840,7 @@ header {
 
                         .search-btn {
                             padding: 8px 12px;
-                            background-color: var(--theme-color);
+                            background-color: var(--primary);
                             color: $white;
                         }
                     }
@@ -1924,7 +1924,7 @@ header {
     }
 
     .top-header {
-        background-color: var(--theme-color);
+        background-color: var(--primary);
 
         .header-contact {
             padding: 10px 0;
@@ -2014,7 +2014,7 @@ header {
         .nav-item {
             &.active {
                 .nav-link {
-                    color: var(--theme-color);
+                    color: var(--primary);
                 }
             }
         }
@@ -2033,7 +2033,7 @@ header {
 
 .header-style-2 {
     .top-part {
-        background-color: var(--theme-color);
+        background-color: var(--primary);
     }
 
     .top-header {
@@ -2126,7 +2126,7 @@ header {
             justify-content: center;
 
             .toggle-sidebar {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 display: block !important;
                 width: 100%;
                 text-align: center;
@@ -2242,7 +2242,7 @@ header {
             border-radius: 5px;
 
             button {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
 
                 i {
                     color: $white;
@@ -2251,7 +2251,7 @@ header {
         }
 
         .cart_qty_cls {
-            background: var(--theme-color);
+            background: var(--primary);
         }
 
         .toggle-nav {
@@ -2337,7 +2337,7 @@ header {
 
             .category-menu {
                 .toggle-sidebar {
-                    background-color: var(--theme-color);
+                    background-color: var(--primary);
                     padding-top: 12px;
                 }
             }
@@ -2509,7 +2509,7 @@ header {
 
 .top-header {
     &.top-header-theme {
-        background-color: var(--theme-color);
+        background-color: var(--primary);
 
         .header-dropdown {
             li {
@@ -2789,7 +2789,7 @@ header {
         background-color: rgba(32, 102, 100, 0.12);
         padding: 6px 17px;
         border-radius: 8px;
-        border: 1px dashed var(--theme-color);
+        border: 1px dashed var(--primary);
 
         svg {
             margin-right: 10px;

@@ -208,7 +208,7 @@
 
                     h6 {
                         text-transform: uppercase;
-                        color: var(--theme-color);
+                        color: var(--primary);
                         margin-bottom: 0;
                     }
                 }
@@ -227,7 +227,7 @@
             }
 
             &:hover {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
                 box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
                 z-index: 10;
@@ -359,7 +359,7 @@
         height: 8px;
 
         .progress-bar {
-            background-color: var(--theme-color);
+            background-color: var(--primary);
         }
     }
 }

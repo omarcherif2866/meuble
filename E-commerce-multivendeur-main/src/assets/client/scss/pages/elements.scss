@@ -345,7 +345,7 @@ ul.list-style {
 
       &:hover {
         letter-spacing: 1.5px;
-        color: var(--theme-color);
+        color: var(--primary);
       }
     }
   }
@@ -420,13 +420,13 @@ ul.list-style {
 }
 
 .link-primary {
-  color: var(--theme-color);
+  color: var(--primary);
   cursor: pointer;
   text-decoration: none;
   opacity: 0.7;
 
   &:hover {
-    color: var(--theme-color);
+    color: var(--primary);
     opacity: 1;
   }
 }
@@ -459,11 +459,11 @@ ul.list-style {
 
     &:hover {
       >i {
-        color: var(--theme-color);
+        color: var(--primary);
       }
 
       .nav-link {
-        color: var(--theme-color);
+        color: var(--primary);
       }
     }
   }
@@ -471,13 +471,13 @@ ul.list-style {
 
   >.nav-item.active {
     >i {
-      color: var(--theme-color);
+      color: var(--primary);
     }
 
 
 
     .nav-link {
-      color: var(--theme-color);
+      color: var(--primary);
 
       &:before {
         transform: scaleX(1);
@@ -498,11 +498,11 @@ ul.list-style {
   transition: all 0.3s linear;
   margin-left: 80px;
   background: white;
-  color: var(--theme-color);
+  color: var(--primary);
 
   &:hover {
-    background: var(--theme-color);
-    border-color: var(--theme-color);
+    background: var(--primary);
+    border-color: var(--primary);
     color: white;
 
     i {
@@ -568,14 +568,14 @@ ul.list-style {
 
       &:hover {
         >.nav-link {
-          color: var(--theme-color);
+          color: var(--primary);
         }
       }
     }
 
     >.nav-item.active {
       >.nav-link {
-        color: var(--theme-color);
+        color: var(--primary);
       }
     }
   }
@@ -603,27 +603,27 @@ ul.list-style {
 
       &:hover {
         >.nav-link {
-          color: var(--theme-color);
+          color: var(--primary);
         }
       }
     }
 
     >.nav-item.active {
       >.nav-link {
-        color: var(--theme-color);
+        color: var(--primary);
       }
     }
 
   }
 
   .nav_btn {
-    color: var(--theme-color);
+    color: var(--primary);
     border: 2px solid #79ccde;
 
     &:hover {
-      background: var(--theme-color);
+      background: var(--primary);
       color: white;
-      border-color: var(--theme-color);
+      border-color: var(--primary);
     }
   }
 }
@@ -742,7 +742,7 @@ ul.list-style {
     // }
 
     .icon {
-      color: var(--theme-color);
+      color: var(--primary);
       transform: rotate(-180deg);
     }
   }
@@ -849,7 +849,7 @@ ul.list-style {
         color: #6b707f;
 
         &:hover {
-          color: var(--theme-color);
+          color: var(--primary);
         }
       }
     }
@@ -889,7 +889,7 @@ ul.list-style {
     right: 30px;
     transform: rotate(180deg);
     transition: all 0.2s linear;
-    color: var(--theme-color);
+    color: var(--primary);
   }
 
   &:focus {
@@ -936,7 +936,7 @@ ul.list-style {
       i {
         position: absolute;
         right: 30px;
-        color: var(--theme-color);
+        color: var(--primary);
         font-size: 22px;
         top: 50%;
         transform: translateY(-50%);
@@ -988,7 +988,7 @@ ul.list-style {
   }
 
   &:hover {
-    border-color: var(--theme-color);
+    border-color: var(--primary);
   }
 }
 
@@ -1021,14 +1021,14 @@ ul.list-style {
     border-radius: 16px;
 
     &.alert-primary {
-      color: var(--theme-color);
-      background-color: rgba(var(--theme-color), 0.15);
+      color: var(--primary);
+      background-color: rgba(var(--primary), 0.15);
       border: none;
 
     }
 
     .fa-exclamation-circle {
-      color: var(--theme-color);
+      color: var(--primary);
       margin-right: 15px;
       font-size: 25px;
     }
@@ -1087,13 +1087,13 @@ ul.list-style {
         }
 
         &:hover {
-          background-color: rgba(var(--theme-color), 0.1);
-          border: 1px solid var(--theme-color);
+          background-color: rgba(var(--primary), 0.1);
+          border: 1px solid var(--primary);
           border-radius: 25px;
 
           h5,
           i {
-            color: var(--theme-color);
+            color: var(--primary);
           }
         }
       }
@@ -1129,7 +1129,7 @@ ul.list-style {
   position: relative;
 
   &.active {
-    color: var(--theme-color);
+    color: var(--primary);
   }
 }
 
@@ -1164,7 +1164,7 @@ ul.list-style {
 
     .log-version {
       flex: 1;
-      background: var(--theme-color);
+      background: var(--primary);
       text-align: center;
       font-size: 14px;
       font-weight: 400;
@@ -1406,8 +1406,8 @@ ul.list-style {
     border-radius: 5px;
 
     &.active {
-      color: var(--theme-color);
-      border-left: 3px solid var(--theme-color);
+      color: var(--primary);
+      border-left: 3px solid var(--primary);
     }
   }
 }

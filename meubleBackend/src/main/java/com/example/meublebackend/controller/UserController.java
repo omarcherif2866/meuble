@@ -28,13 +28,13 @@ public class UserController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUserEntityById(id);
         return ResponseEntity.ok("User deleted successfully");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<User> getUser(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
         if (user != null) {
             return ResponseEntity.ok(user);
@@ -52,20 +52,20 @@ public class UserController {
 
 
     @PutMapping("/block/{userId}")
-    public ResponseEntity<Void> blockUser(@PathVariable Integer userId) {
+    public ResponseEntity<Void> blockUser(@PathVariable Long userId) {
         userService.blockUser(userId);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/unblock/{userId}")
-    public ResponseEntity<Void> unblockUser(@PathVariable Integer userId) {
+    public ResponseEntity<Void> unblockUser(@PathVariable Long userId) {
         userService.unblockUser(userId);
         return ResponseEntity.ok().build();
     }
 
 
     @PutMapping("/change-password/{id}")
-    public ResponseEntity<?> changePassword(@PathVariable Integer id, @RequestBody Map<String, String> body) {
+    public ResponseEntity<?> changePassword(@PathVariable Long id, @RequestBody Map<String, String> body) {
         try {
             String oldPassword = body.get("oldPassword");
             String newPassword = body.get("newPassword");

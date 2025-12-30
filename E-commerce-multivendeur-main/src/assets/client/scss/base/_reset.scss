@@ -20,7 +20,7 @@ hr {
         width: 75px;
         height: 3px;
         margin-top: 13px;
-        background-color: var(--theme-color);
+        background-color: var(--primary);
         text-align: center;
         margin-left: auto;
         margin-right: auto;
@@ -123,7 +123,7 @@ hr {
 }
 
 .badge-theme-color {
-    background-color: var(--theme-color);
+    background-color: var(--primary);
     color: $white;
 }
 
@@ -197,7 +197,7 @@ del {
 }
 
 .bg-theme {
-    background-color: var(--theme-color);
+    background-color: var(--primary);
     background-color: var(--theme-color2);
 }
 

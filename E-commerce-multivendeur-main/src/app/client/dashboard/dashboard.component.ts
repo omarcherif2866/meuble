@@ -9,6 +9,8 @@ import { SocketIOServiceService } from 'src/app/Service/SocketIOService/socket-i
 import { CookieService } from 'ngx-cookie-service';
 import { Product } from 'src/app/Models/product';
 import { ProductService } from 'src/app/Service/Product/product.service';
+import { CategoryService } from 'src/app/Service/category/category.service';
+import { Category } from 'src/app/Models/category';
 
 const SCRIPT_PATH_LIST = ['assets/client/js/script.js'];
 
@@ -25,6 +27,8 @@ export class DashboardComponent implements OnInit {
   authenticated!: false;
   nouveautes: Product[] = [];
   isLoading: boolean = false;
+  listcategorys: Category[] = [];
+  filteredCategorys: Category[] = [];
   constructor(
     private router: Router,
     route: ActivatedRoute,
@@ -34,12 +38,15 @@ export class DashboardComponent implements OnInit {
     private toastr: ToastrService,
     private productService: ProductService,
     private SocketIOServiceService: SocketIOServiceService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private categoryService: CategoryService,
+    
   ) {}
 
   ngOnInit() {
 
     this.loadNouveautes();
+    this.loadCategorys();
 
     // this.socket.on('ban', (data) => {
     //   if (data == 'user ban') {
@@ -187,11 +194,30 @@ export class DashboardComponent implements OnInit {
     if (!id) return;
     this.router.navigate(['/singleProduct', id]);
   }
+
+
+  loadCategorys(): void {
+    this.isLoading = true;
+    this.categoryService.getAll().subscribe({
+      next: (categorys) => {
+        this.listcategorys = categorys;
+        this.filteredCategorys = categorys;
+        this.isLoading = false;
+        console.log('categorys chargés:', categorys);
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des categorys', error);
+        this.isLoading = false;
+        alert('Erreur lors du chargement des categorys');
+      }
+    });
+  }
+
+  onCategoryClick(category: Category): void {
+    this.router.navigate(['/shop'], { 
+      queryParams: { categoryId: category.id, categoryName: category.name } 
+    });
+  }
+
 }
 
-// use guard in angular 13  to protect routes in angular 13
-//
-//
-//
-//
-// how replace  /  with  \  in angular 13 ?

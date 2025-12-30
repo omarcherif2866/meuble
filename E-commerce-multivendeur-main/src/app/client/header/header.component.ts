@@ -59,40 +59,81 @@ export class HeaderComponent implements OnInit {
     private SocketIOServiceService: SocketIOServiceService
   ) {}
 
-  ngOnInit(): void {
-    const id = localStorage.getItem('user_id');
-    this.idUser= id;
-    this.authService.isLoggedIn().subscribe((loggedIn) => {
-      this.authenticated = loggedIn;
-      console.log('Utilisateur connecté ?', loggedIn);
-      console.log('Utilisateur connecté ?', this.idUser);
+ngOnInit(): void {
+  const id = localStorage.getItem('user_id');
+  this.idUser = id;
   
-      // Si l'utilisateur est connecté, récupérez son ID
-      if (loggedIn) {
-        this.authService.getUserProfile(id).subscribe((user: any) => {
-          if (user && user.id) { // Vérifiez si l'objet utilisateur et son ID existent
-            this.idUser = user.id; // Utilisez la propriété idUser au lieu de id
-            console.log('ID de l\'utilisateur connecté :', this.idUser); // Utilisez également idUser ici
-          }
-        });
-      }
+  this.authService.isLoggedIn().subscribe((loggedIn) => {
+    this.authenticated = loggedIn;
+
+    if (loggedIn) {
+      this.authService.getUserProfile(id).subscribe((user: any) => {
+        if (user && user.id) {
+          this.idUser = user.id;
+          this.loadCartFromBackend(this.idUser);
+        }
+      });
+    }
+  });
+
+  this.categoriesSubscription = this.service
+    .getAll()
+    .subscribe((response: Category[]) => {
+      this.categories = response;
+      this.cdr.detectChanges();
     });
 
-    this.categoriesSubscription = this.service
-      .getAll()
-      .subscribe((response: Category[]) => {
-        this.categories = response;
-        this.cdr.detectChanges(); // Force an update
-      });
-      console.log(this.itemsQuantity)
+  this.cart = this.cartService.getCartValue();
 
-      this.cart = this.cartService.getCartValue();
+  this.cartService.cartSubject.subscribe((cart: Cart) => {
+    this.cart = cart;
+  });
 
-      // Abonnez-vous aux changements du panier
-      this.cartService.cartSubject.subscribe((cart: Cart) => {
-        this.cart = cart;
-      });
-  }
+  // Corrigez l'événement socket - utilisez 'listen' ou 'fromEvent' selon votre implémentation
+  this.SocketIOServiceService.on('cartUpdated').subscribe((data: any) => {
+    if (data.userId === this.idUser) {
+      this.loadCartFromBackend(this.idUser);
+    }
+  });
+}
+
+
+loadCartFromBackend(userId: number): void {
+  this.http.get<any>(`http://localhost:9090/api/cart/${userId}`).subscribe({
+    next: (cartData) => {
+      console.log('Données du panier reçues (header):', cartData);
+      
+      let items: CartItem[] = [];
+      
+      if (Array.isArray(cartData)) {
+        items = cartData.map((item: any) => ({
+          id: item.productId || item.id,
+          name: item.productName || item.name || item.nom,
+          price: item.price || item.prix,
+          quantity: item.quantity || item.quantite || 1,
+          image: item.image
+        }));
+      } else if (cartData && Array.isArray(cartData.items)) {
+        items = cartData.items.map((item: any) => ({
+          id: item.productId || item.id,
+          name: item.productName || item.name || item.nom,
+          price: item.price || item.prix,
+          quantity: item.quantity || item.quantite || 1,
+          image: item.image
+        }));
+      }
+      
+      const cart: Cart = { items };
+      this.cartService.updateCart(cart);
+    },
+    error: (error) => {
+      console.error('Erreur lors du chargement du panier:', error);
+      if (error.status === 404 || error.status === 204) {
+        this.cartService.updateCart({ items: [] });
+      }
+    }
+  });
+}
 
   getTotal(items: Array<CartItem>): number {
     return this.cartService.getTotal(items);

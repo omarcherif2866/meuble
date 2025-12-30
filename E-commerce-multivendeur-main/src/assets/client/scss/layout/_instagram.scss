@@ -27,14 +27,14 @@
         font-weight: 600;
 
         span {
-            color: var(--theme-color);
+            color: var(--primary);
         }
     }
 }
 
 .instagram-box {
     position: relative;
-    background-color: var(--theme-color);
+    background-color: var(--primary);
     overflow: hidden;
 
     img {
@@ -47,7 +47,7 @@
         position: absolute;
         height: 100%;
         width: 100%;
-        background-color: var(--theme-color);
+        background-color: var(--primary);
         top: 0;
         text-align: center;
         display: flex;

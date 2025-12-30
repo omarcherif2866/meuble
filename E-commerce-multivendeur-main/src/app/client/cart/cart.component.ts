@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { HeaderComponent } from '../header/header.component';
 import { SocketIOServiceService } from 'src/app/Service/SocketIOService/socket-ioservice.service';
-import { Cart, CartData, CartItem } from 'src/app/Models/cart';
+import { Cart, CartItem } from 'src/app/Models/cart';
 import { CartService } from 'src/app/Service/cart/cart.service';
 import { AuthService } from 'src/app/Service/Auth/auth.service';
 
@@ -57,6 +57,8 @@ export class CartComponent implements OnInit {
     this.service.cart.subscribe((_cart: Cart) => {
       this.cart = _cart;
       this.dataSource = this.cart.items;
+            console.log("items:", this.dataSource)
+
     });
 
 
@@ -151,22 +153,25 @@ export class CartComponent implements OnInit {
       });
   }
 
-  getPlatImageUrl(images: string | undefined): string {
-    // Vérifiez si l'image est définie
-    if (images) {
-      return `http://localhost:9090/img/${images}`;
-    } else {
-      // Remplacez par une URL ou une image par défaut si nécessaire
-      return 'http://localhost:9090/default-image.jpg';
-    }
+sanitizeImage(url: string): string {
+  if (!url) return '';
+
+  // Cas où l'URL est en double
+  if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
+    const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
+    return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
   }
+
+  return url;
+}
+
 
   getTotal(items: Array<CartItem>): number {
     return this.service.getTotal(items);
   }
 
   onClearCart() {
-    this.service.ClearCart();
+    this.service.clearCart();
   }
 
   onRemoveFromCart(item: CartItem) {
@@ -184,58 +189,58 @@ export class CartComponent implements OnInit {
 
 
 
-  checkOut() {
-    console.log('Tentative de paiement...');
+  // checkOut() {
+  //   console.log('Tentative de paiement...');
 
-    this.authService.isLoggedIn().subscribe(loggedIn => {
-      console.log('Utilisateur connecté ?', loggedIn);
+  //   this.authService.isLoggedIn().subscribe(loggedIn => {
+  //     console.log('Utilisateur connecté ?', loggedIn);
 
-      if (loggedIn) {
-        console.log("Utilisateur connecté, procéder au paiement...");
-        // Récupérer l'identifiant du client
-        const clientId = localStorage.getItem('user_id');
-        if (!clientId) {
-          console.error('Identifiant du client non trouvé');
-          return;
-        }
+  //     if (loggedIn) {
+  //       console.log("Utilisateur connecté, procéder au paiement...");
+  //       // Récupérer l'identifiant du client
+  //       const clientId = localStorage.getItem('user_id');
+  //       if (!clientId) {
+  //         console.error('Identifiant du client non trouvé');
+  //         return;
+  //       }
   
-        // Préparer les données de la commande
-        const cartItems: CartData[] = this.cart.items.map((data) => {
-          return {
-            productId: data.id,
-            quantity: data.quantity,
-            stockAttribute: data.attributes, // Assurez-vous que "attributes" correspond à ce que le serveur attend
-          };
-        });
+  //       // Préparer les données de la commande
+  //       const cartItems: CartData[] = this.cart.items.map((data) => {
+  //         return {
+  //           productId: data.id,
+  //           quantity: data.quantity,
+  //           stockAttribute: data.attributes, // Assurez-vous que "attributes" correspond à ce que le serveur attend
+  //         };
+  //       });
   
-        const data = {
-          items: cartItems,
-          clientId: clientId,
-        };
+  //       const data = {
+  //         items: cartItems,
+  //         clientId: clientId,
+  //       };
   
-        // Envoyer la requête de paiement
-        this.service.checkOut(data, clientId).subscribe({
-          next: (res) => {
-            // Mettre à jour le panier avec les nouveaux articles après l'achat
-            this.cart.items = res.globalOrder.items;
-            this.dataSource = this.cart.items;
-            this.router.navigate(['/checkout']);
-            console.log("Commande ajoutée avec succès");
+  //       // Envoyer la requête de paiement
+  //       this.service.checkOut(data, clientId).subscribe({
+  //         next: (res) => {
+  //           // Mettre à jour le panier avec les nouveaux articles après l'achat
+  //           this.cart.items = res.globalOrder.items;
+  //           this.dataSource = this.cart.items;
+  //           this.router.navigate(['/checkout']);
+  //           console.log("Commande ajoutée avec succès");
 
-            // Afficher un message de succès
-            // alert('Commande ajoutée avec succès');
-          },
-          error: (err) => {
-            // Afficher un message d'erreur précis
-            alert(`Erreur lors de l'ajout de la commande: ${err.message}`);
-          }
-        });
-      } else {
-        console.log("Utilisateur non connecté, redirection vers la page de connexion...");
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+  //           // Afficher un message de succès
+  //           // alert('Commande ajoutée avec succès');
+  //         },
+  //         error: (err) => {
+  //           // Afficher un message d'erreur précis
+  //           alert(`Erreur lors de l'ajout de la commande: ${err.message}`);
+  //         }
+  //       });
+  //     } else {
+  //       console.log("Utilisateur non connecté, redirection vers la page de connexion...");
+  //       this.router.navigate(['/login']);
+  //     }
+  //   });
+  // }
   
   
 }

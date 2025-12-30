@@ -1254,7 +1254,7 @@ body {
     .category-shop-section {
         .category-mobile-button {
             padding: 10px 30px;
-            background-color: var(--theme-color);
+            background-color: var(--primary);
             color: white;
             border-radius: 5px;
             font-size: 16px;
@@ -1529,7 +1529,7 @@ body {
 
                             &:hover,
                             &:active {
-                                color: var(--theme-color);
+                                color: var(--primary);
                             }
                         }
                     }
@@ -2925,7 +2925,7 @@ body {
             top: 0;
 
             .top-header {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
 
                 .container {
                     background-color: transparent;
@@ -4361,7 +4361,7 @@ body {
                     padding-bottom: 10px;
                     text-align: center;
                     margin-bottom: 20px;
-                    background: none var(--theme-color);
+                    background: none var(--primary);
 
                     .open-popup {
                         text-align: left;
@@ -4640,7 +4640,7 @@ body {
             .nav-item {
                 .nav-link {
                     &.active {
-                        border-bottom: 2px solid var(--theme-color);
+                        border-bottom: 2px solid var(--primary);
                         border-right: none;
                     }
                 }
@@ -5297,7 +5297,7 @@ body {
                     a {
                         &:hover {
                             i {
-                                color: var(--theme-color);
+                                color: var(--primary);
                             }
                         }
                     }
@@ -6695,7 +6695,7 @@ body {
     .product-christmas {
         .product-box {
             .cart-wrap {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 bottom: 0;
                 opacity: 1;
             }

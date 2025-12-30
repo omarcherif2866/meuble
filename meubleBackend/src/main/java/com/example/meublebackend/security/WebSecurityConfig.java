@@ -35,6 +35,8 @@ public class WebSecurityConfig  {
             "/products/**",
             "/categories",
             "/categories/**",
+            "/orders/**",
+            "/api/cart/**",
             "/ws/**"  // Add WebSocket endpoint
 
     };

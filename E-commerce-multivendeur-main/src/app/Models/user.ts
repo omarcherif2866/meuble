@@ -4,7 +4,8 @@ export interface User {
     username: string;
     email: string;
     password: string;
-    roles: any;
+    role: any;
     image: string;
+    blocked: Boolean
   }
   

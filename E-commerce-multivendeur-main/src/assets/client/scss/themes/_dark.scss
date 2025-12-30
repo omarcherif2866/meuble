@@ -875,7 +875,7 @@ body {
                                         color: $dark-link;
 
                                         &:hover {
-                                            color: var(--theme-color);
+                                            color: var(--primary);
                                         }
                                     }
                                 }
@@ -1086,7 +1086,7 @@ body {
 
             .current {
                 a {
-                    color: var(--theme-color);
+                    color: var(--primary);
                 }
             }
         }
@@ -1977,7 +1977,7 @@ body {
             color: $white-5;
 
             &.active {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 transition: all 0.3s ease;
                 color: $white;
             }
@@ -2331,10 +2331,10 @@ body {
 
                     &.current {
                         color: #fff;
-                        background-color: var(--theme-color);
+                        background-color: var(--primary);
 
                         &:after {
-                            border-left-color: var(--theme-color);
+                            border-left-color: var(--primary);
                         }
                     }
                 }
@@ -2565,7 +2565,7 @@ body {
 
                 .nav-link {
                     &.active {
-                        color: var(--theme-color);
+                        color: var(--primary);
                     }
                 }
             }
@@ -2577,7 +2577,7 @@ body {
             &.nav-tabs {
                 .nav-link {
                     &.active {
-                        color: var(--theme-color);
+                        color: var(--primary);
                     }
                 }
             }
@@ -2714,7 +2714,7 @@ body {
 
             &:hover {
                 h4 {
-                    color: var(--theme-color);
+                    color: var(--primary);
                 }
             }
         }
@@ -3087,7 +3087,7 @@ body {
         .modal-dialog {
             .modal-content {
                 .modal-body {
-                    background-image: linear-gradient(135deg, var(--theme-color) 5.77%, $dark-top 5.77%, $dark-top 25%, $white-1 25%, $white-1 30.77%, $dark-top 30.77%, $dark-top 50%, var(--theme-color) 50%, var(--theme-color) 55.77%, $dark-top 55.77%, $dark-top 75%, $white-1 75%, $white-1 80.77%, $dark-top 80.77%, $dark-top 100%);
+                    background-image: linear-gradient(135deg, var(--primary) 5.77%, $dark-top 5.77%, $dark-top 25%, $white-1 25%, $white-1 30.77%, $dark-top 30.77%, $dark-top 50%, var(--primary) 50%, var(--primary) 55.77%, $dark-top 55.77%, $dark-top 75%, $white-1 75%, $white-1 80.77%, $dark-top 80.77%, $dark-top 100%);
 
                     .modal-bg {
                         background-color: $dark-body;
@@ -3236,7 +3236,7 @@ body {
                     color: $dark-link;
 
                     &:hover {
-                        color: var(--theme-color);
+                        color: var(--primary);
                     }
                 }
             }
@@ -3760,7 +3760,7 @@ body {
 
             &.active {
                 img {
-                    border-color: var(--theme-color);
+                    border-color: var(--primary);
                 }
             }
         }

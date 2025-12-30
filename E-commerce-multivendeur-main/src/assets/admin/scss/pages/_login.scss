@@ -56,7 +56,7 @@
       font-size: 34px;
       font-weight: 700;
       letter-spacing: calc(0px + (2 - 0) * ((100vw - 320px) / (1920 - 320)));
-      color: var(--theme-color);
+      color: var(--primary);
       position: relative;
 
       &:before {
@@ -66,7 +66,7 @@
         position: absolute;
         top: 0;
         left: calc(-10px + (-10 - 10) * ((100vw - 320px) / (1920 - 320)));
-        background: var(--theme-color);
+        background: var(--primary);
       }
 
       h2 {
@@ -269,7 +269,7 @@
       }
 
       .spin {
-        background: var(--theme-color);
+        background: var(--primary);
         z-index: 4;
         width: 0;
       }
@@ -315,8 +315,8 @@
         button {
           width: 100%;
           left: 0%;
-          background-color: var(--theme-color);
-          border: 1px solid var(--theme-color);
+          background-color: var(--primary);
+          border: 1px solid var(--primary);
           font-size: 18px;
           color: $white;
           padding: calc(13px + (18 - 13) * ((100vw - 320px) / (1920 - 320)));
@@ -341,7 +341,7 @@
 
       button {
         background-color: $white;
-        color: var(--theme-color);
+        color: var(--primary);
         border: none;
       }
 
@@ -349,7 +349,7 @@
         &.active {
           border: 1px solid transparent;
           color: $white !important;
-          background-color: var(--theme-color);
+          background-color: var(--primary);
 
           span {
             opacity: 0;
@@ -396,7 +396,7 @@
       margin: 10px auto 0;
 
       &:hover {
-        color: var(--theme-color);
+        color: var(--primary);
       }
     }
 
@@ -475,7 +475,7 @@
       width: 140px;
       height: 140px;
       border-radius: 50%;
-      background: var(--theme-color);
+      background: var(--primary);
       position: absolute;
       top: 40px;
       right: -70px;

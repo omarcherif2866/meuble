@@ -1,12 +1,9 @@
 import { Component, OnInit, Renderer2, ElementRef, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-// import { ProductsService } from '../../services/products.service';
-// import { CartService } from 'src/app/services/cart.service';
+import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from 'src/app/Service/category/category.service';
 import { Subscription } from 'rxjs';
 import { ProductService } from 'src/app/Service/Product/product.service';
 import { Category } from 'src/app/Models/category';
-
-
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
@@ -24,17 +21,17 @@ export class ShopComponent implements OnInit {
   rowHeight = ROWS_HEIGHT[this.cols];
   productsSubscription: Subscription | undefined;
   count = '12';
-
   selectedCategory: Category | null = null;
-  @Output() showCategory = new EventEmitter<string>();
-
+  
+  @Output() showCategory = new EventEmitter();
 
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
-    private el: ElementRef
+    private el: ElementRef,
+    private route: ActivatedRoute  // Ajout pour lire les paramètres de l'URL
   ) { }
 
   ngOnInit(): void {
@@ -42,24 +39,34 @@ export class ShopComponent implements OnInit {
       this.categories = data;
     });
 
-    
-    this.getAllProducts();
+    // Vérifier s'il y a un paramètre categoryId dans l'URL
+    this.route.queryParams.subscribe(params => {
+      const categoryId = params['categoryId'];
+      const categoryName = params['categoryName'];
+      
+      if (categoryId) {
+        // Charger les produits de la catégorie spécifiée
+        this.loadProductsByCategory(+categoryId);
+        
+        // Mettre à jour la catégorie sélectionnée
+        if (this.categories) {
+          this.selectedCategory = this.categories.find(c => c.id === +categoryId) || null;
+        }
+        
+        this.activeAll = false;
+        this.activeIndex = categoryId;
+      } else {
+        // Charger tous les produits par défaut
+        this.getAllProducts();
+      }
+    });
 
-    var seach: string = new URLSearchParams(window.location.search).get('q') || '';
-    // if (seach) {
-    //   this.keyword = seach;
-    //   this.seachComponent = true
-    //   this.productService.searchProducts(seach).subscribe(data => {
-    //     this.products = data;
-    //     this.products_all = data;
-    //   });
-
-    // } else {
-    //   this.productService.getProducts().subscribe(data => {
-    //     this.products = data;
-    //     this.products_all = data;
-    //   })
-    // }
+    // Gestion de la recherche
+    var search: string = new URLSearchParams(window.location.search).get('q') || '';
+    if (search) {
+      this.keyword = search;
+      this.seachComponent = true;
+    }
   }
 
   activeIndex: any;
@@ -68,16 +75,18 @@ export class ShopComponent implements OnInit {
 
   onShowCategory(category: Category) {
     this.selectedCategory = category;
+    this.activeAll = false;
+    this.activeIndex = category.id;
     this.showCategory.emit(category.name);
-
-    // Appeler la méthode pour récupérer les produits de la catégorie sélectionnée
-    this.loadProductsByCategory(this.selectedCategory.id);
+    this.loadProductsByCategory(category.id);
   }
-
 
   loadProductsByCategory(categoryId: number) {
     this.productService.getByCategory(categoryId).subscribe({
-      next: (res) => this.products = res,
+      next: (res) => {
+        this.products = res;
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error(err)
     });
   }
@@ -101,10 +110,13 @@ export class ShopComponent implements OnInit {
   }
 
   getAllProducts() {
+    this.activeAll = true;
+    this.activeIndex = null;
+    this.selectedCategory = null;
+    
     this.productsSubscription = this.productService.getAll().subscribe((_products) => {
       this.products = _products;
-      this.cdr.detectChanges(); // Force la mise à jour de la vue
+      this.cdr.detectChanges();
     });
   }
-
 }

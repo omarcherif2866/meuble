@@ -7,24 +7,24 @@ import java.util.Set;
 
 public interface UserService {
     User adduser(User users);
-    void deleteUserEntityById(Integer id);
-    User getUserById(Integer id);
+    void deleteUserEntityById(Long id);
+    User getUserById(Long id);
 
     public List<User> getAllUsers();
 
     boolean existByEmail(String email);
 
 
-    User updateUser(Integer id, User user);
+    User updateUser(Long id, User user);
 
     User registerNewUser(User newUser);
 
-    void blockUser(Integer userId);
-    void unblockUser(Integer userId);
-    void changePassword(Integer id, String oldPassword, String newPassword);
+    void blockUser(Long userId);
+    void unblockUser(Long userId);
+    void changePassword(Long id, String oldPassword, String newPassword);
     Map<String, String> sendVerificationCode(String email);
     void verifyCode(String userId, String code);
-    void resetPassword(String userId, String newPassword);
+    void resetPassword(Long userId, String newPassword);
 
 }
 

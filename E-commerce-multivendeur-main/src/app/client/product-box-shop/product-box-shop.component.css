@@ -2,4 +2,26 @@
     max-height: 200px; /* Ajustez cette valeur selon vos besoins */
     width: auto;
   }
-  
+.btn-accent {
+  background-color: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  border-radius: 20px;      /* plus petit */
+  padding: 6px 14px;        /* taille réduite */
+  font-size: 13px;          /* texte plus fin */
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+  background-color: #5A693F; /* vert olive foncé */
+  border-color: #5A693F;
+  color: #fff;
+}
+.btn-accent:hover {
+  filter: brightness(0.9);
+}
+.btn-accent:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(107, 123, 77, 0.4);
+}

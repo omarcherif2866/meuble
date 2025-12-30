@@ -9,7 +9,7 @@
   margin-right: auto;
   margin-left: auto;
   padding: 140px 50px;
-  border: 2px dashed var(--theme-color);
+  border: 2px dashed var(--primary);
   border-radius: 10px;
   border-image: none;
   background: $transparent-color;
@@ -22,7 +22,7 @@
 
   i {
     font-size: 50px;
-    color: var(--theme-color);
+    color: var(--primary);
   }
 
   position: relative;

@@ -13,7 +13,7 @@
     display: none;
     color: $white;
     text-align: center;
-    background: var(--theme-color);
+    background: var(--primary);
     border: none;
     font-size: 22px;
     padding: 7px;
@@ -24,11 +24,11 @@
     }
 
     &.green-top {
-        background-image: linear-gradient(to right, var(--theme-color), var(--theme-color2));
+        background-image: linear-gradient(to right, var(--primary), var(--theme-color2));
         border: 1px solid rgba($white, 0.5);
     }
 
     &.gradient-top {
-        background: linear-gradient(180deg, var(--theme-color) 0%, var(--theme-color2) 99%);
+        background: linear-gradient(180deg, var(--primary) 0%, var(--theme-color2) 99%);
     }
 }

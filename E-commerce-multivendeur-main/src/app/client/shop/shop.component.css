@@ -1,0 +1,5 @@
+.shop-product-filter .btn:hover {
+  background-color: var(--secondary); /* beige sable */
+  color: var(--dark);
+  border-color: var(--secondary);
+}

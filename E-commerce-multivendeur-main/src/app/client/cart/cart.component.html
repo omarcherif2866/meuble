@@ -1,3 +1,4 @@
+<!-- cart component -->
 <mat-card class="max-w-7xl mx-auto" *ngIf="dataSource.length">
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
@@ -5,7 +6,13 @@
     <ng-container matColumnDef="product">
       <th mat-header-cell *matHeaderCellDef> Image du produit </th>
       <td mat-cell *matCellDef="let product">
-        <img [src]="getPlatImageUrl(product.image)" class="img-fluid" alt="plat-img" width="200" height="200">
+                <img class="mb-1 mx-auto"
+            
+            [src]="sanitizeImage(product.image)" 
+            class="img-fluid" 
+            alt="plat-img" 
+            width="100" 
+            height="100">
       </td>
       <td mat-footer-cell *matFooterCellDef>
         <button type="submit" class="btn btn-solid" id="mc-submit" routerLink="/shop">
@@ -80,9 +87,9 @@
         </div>
       </td>
       <td mat-footer-cell *matFooterCellDef>
-      <button class="btn btn-dark btn-outline-hover-dark mt-2"  (click)="checkOut()">
+      <!-- <button class="btn btn-dark btn-outline-hover-dark mt-2"  (click)="checkOut()">
         Proceed To Checkout
-      </button>
+      </button> -->
       </td>
     </ng-container>
 

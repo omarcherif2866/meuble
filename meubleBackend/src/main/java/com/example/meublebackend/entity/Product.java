@@ -26,6 +26,7 @@ public class Product {
     @Column(columnDefinition = "TEXT") // ou VARCHAR(1000) selon ta BDD
     @Convert(converter = StringListConverter.class)
     private List<String> images;
+    private Integer quantite;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

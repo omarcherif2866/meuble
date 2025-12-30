@@ -71,7 +71,7 @@
             }
 
             .lable1 {
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 color: $white;
                 border-bottom-left-radius: 25px;
                 border-top-left-radius: 25px;
@@ -140,7 +140,7 @@
                 display: inline-block;
 
                 &:hover {
-                    color: var(--theme-color);
+                    color: var(--primary);
                     transition: all 0.2s ease;
                 }
             }
@@ -156,7 +156,7 @@
         .lable-block {
             .lable3 {
                 border-radius: 100%;
-                background-color: var(--theme-color);
+                background-color: var(--primary);
                 text-align: center;
                 font-size: 14px;
                 font-weight: 700;
@@ -237,7 +237,7 @@
             padding-left: 10px;
 
             &:hover {
-                color: var(--theme-color);
+                color: var(--primary);
             }
         }
     }
@@ -335,12 +335,12 @@
             z-index: 1;
 
             i {
-                color: var(--theme-color);
+                color: var(--primary);
             }
 
             .btn-outline {
                 transition: all 0.2s ease;
-                color: var(--theme-color);
+                color: var(--primary);
 
                 &:hover {
                     color: $white;

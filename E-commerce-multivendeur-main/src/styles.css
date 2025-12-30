@@ -1,2 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~ngx-toastr/toastr';
+:root {
+  --primary: #8B6F47;      /* Bois élégant */
+  --secondary: #E8DED1;    /* Beige sable */
+  --accent: #6B7B4D;       /* Vert olive */
+  --dark: #2E2E2E;         /* Texte */
+  --light: #FAF9F7;        /* Fond */
+}

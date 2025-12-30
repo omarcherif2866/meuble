@@ -53,20 +53,20 @@
   .static-top-widget {
     .icons-widgets {
       .text-center {
-        background-color: var(--theme-color);
+        background-color: var(--primary);
 
         .feather {
-          fill: var(--theme-color);
+          fill: var(--primary);
           stroke: $white
         }
       }
     }
 
     .media-body {
-      color: var(--theme-color) !important;
+      color: var(--primary) !important;
 
       h3 {
-        color: var(--theme-color);
+        color: var(--primary);
         background-color: $white
       }
     }
@@ -1493,7 +1493,7 @@ footer {
         color: $danger-color;
 
         i {
-          color: var(--theme-color);
+          color: var(--primary);
           margin-left: 5px;
         }
       }
@@ -3598,7 +3598,7 @@ ul {
       li {
         padding: 10px;
         border-radius: 100%;
-        border: 1px solid var(--theme-color);
+        border: 1px solid var(--primary);
         height: 40px;
         width: 40px;
         margin-right: 10px;
@@ -3691,7 +3691,7 @@ ul {
 .forgot-pass {
   padding: 0;
   margin-left: auto;
-  color: var(--theme-color);
+  color: var(--primary);
 }
 
 .custom-theme {
@@ -3744,18 +3744,18 @@ ul {
 
     .page-item {
       &.active {
-        background-color: var(--theme-color);
+        background-color: var(--primary);
         color: $white;
 
         .page-link {
           color: $white;
-          background-color: var(--theme-color);
-          border-color: var(--theme-color);
+          background-color: var(--primary);
+          border-color: var(--primary);
         }
       }
 
       .page-link {
-        color: var(--theme-color);
+        color: var(--primary);
       }
     }
   }
@@ -3862,14 +3862,14 @@ ul {
 
     &.progtrckr-done {
       color: $black1;
-      border-top: 4px solid var(--theme-color);
+      border-top: 4px solid var(--primary);
       width: 100% !important;
 
       &:before {
         content: "\f00c";
         font-family: FontAwesome;
         color: $white;
-        background-color: var(--theme-color);
+        background-color: var(--primary);
         height: 30px;
         width: 30px;
         line-height: 2.2em;

@@ -20,6 +20,7 @@ import { CategoryService } from 'src/app/Service/category/category.service';
 import { Cart, CartItem } from 'src/app/Models/cart';
 import { CartService } from 'src/app/Service/cart/cart.service';
 import { Product } from 'src/app/Models/product';
+import { AuthService } from 'src/app/Service/Auth/auth.service';
 const SCRIPT_PATH_LIST = [
   'assets/client/js/jquery-3.3.1.min.js',
 
@@ -68,6 +69,11 @@ export class SinglepageProductComponent implements OnInit {
     this.itemsQuantity = cart.items.map((item) => item.quantity).reduce((prev, current) => prev + current, 0);
   }
 
+
+
+    userId: number | null = null;
+  authenticated = false;
+
   message: any;
   public route: any = '';
   idproduitss: any;
@@ -90,6 +96,8 @@ export class SinglepageProductComponent implements OnInit {
     private renderer: Renderer2,
     private service: ProductService,
     private categoryService:CategoryService,
+    private authService:AuthService,
+
     private cartService: CartService,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
@@ -109,147 +117,75 @@ export class SinglepageProductComponent implements OnInit {
     this.id = segments[segments.length - 1]; // Initialisation de this.id avec l'ID extrait de l'URL
     console.log(this.id);
     this.getProducts();
-    // const id = this.currentRoute.snapshot.paramMap.get('id');
+       this.checkAuthentication();
 
-    // this.http
-    //   .get('api/like/getcountlikebyidproduit/' + id)
-    //   .subscribe((data: any) => {
-    //     this.countlike = data.countlike;
-    //     console.log(this.countlike);
-    //   });
-    // this.http
-    //   .get('api/totale/afficheRate' + '/' + id)
-    //   .subscribe((data: any) => {
-    //     for (let i = 0; i < data.length; i++) {
-    //       this.numberRate += parseInt(data[i].noter) / data.length;
-    //     }
-    //   });
-
-    // this.http.get('api/auth/getUser', { withCredentials: true }).subscribe(
-    //   (res: any) => {
-    //     let str = 'http://localhost:4200/' + 'api' + '/' + res.image;
-    //     this.message = res.id;
-    //     // this.message = `${this.api+res.image}`;
-    //     // how show image in toast angular 13 ?
-
-    //     Emitters.authEmitter.emit(true);
-    //   },
-    //   (err) => {
-    //     Emitters.authEmitter.emit(false);
-    //   }
-    // );
-
-    // this.http
-    //   .get('api/produit/afficheproduitparid/' + id)
-    //   .subscribe((data: any) => {
-    //     this.idproduitss = data.id;
-    //     this.nom = data.nom;
-    //     this.prix = data.prix;
-    //     this.image2 = data.image;
-    //     this.Description = data.Description;
-    //     this.quantite = data.quantite;
-    //     this.promotion = data.promotion;
-    //     this.date_exp = data.date_exp;
-    //     this.prixold = data.prixold;
-    //     this.idProduit = data.id;
-    //     this.numberpromotion = data.numberpromotion;
-    //   });
-    // this.http
-    //   .get('api/produit/afficheImageProduit/' + id)
-    //   .subscribe((data: any) => {
-    //     this.image = data;
-    //     console.log(this.image);
-    //   });
-
-    // this.http
-    //   .get('api/noterproduit/checkRateexistUser/' + this.message + '/' + id)
-    //   .subscribe(
-    //     (res: any) => {
-    //       console.log(res.message);
-    //     },
-    //     (err) => {}
-    //   );
-
-    // // how reload page angular with router navigate ?
-
-    // SCRIPT_PATH_LIST.forEach((e) => {
-    //   const scriptElement = this.ScriptServiceService.loadJsScript(
-    //     this.renderer,
-    //     e
-    //   );
-    //   scriptElement.onload = () => {
-    //     console.log('loaded');
-    //   };
-    //   scriptElement.onerror = () => {
-    //     console.log('Could not load the script!');
-    //   };
-    // });
   }
-  ajouterPanier(id: number, idProduit: number, prix: number) {
-    if (id == null) {
-      this.toastr.error(
-        'Vous devez vous connecter pour ajouter au panier',
-        'Erreur',
-        {
-          timeOut: 3000,
-          progressBar: true,
-          progressAnimation: 'increasing',
-          positionClass: 'toast-top-right',
-        }
-      );
-      this._router.navigate(['/login']);
-    }
-    this.http
-      .post('api/panier/ajouterPanier', {
-        id: id,
-        idProduit: idProduit,
-        prix: prix,
-      })
-      .subscribe(
-        (data: any) => {
-          this.toastr.success(
-            'Produit ajouté au panier avec succès',
-            'Ajouté au panier',
-            {
-              timeOut: 3000,
-              progressBar: true,
-              progressAnimation: 'increasing',
-              positionClass: 'toast-top-right',
-            }
-          );
-          this.ngOnInit();
-          this.SocketIOServiceService.emit('idusercountprdouit', id);
-        },
-        (error: any) => {
-          if (error.status == 401) {
-            this.toastr.error('Produit déjà dans le panier', 'Erreur', {
-              timeOut: 3000,
-              progressBar: true,
-              progressAnimation: 'increasing',
-              positionClass: 'toast-top-right',
-            });
+  // ajouterPanier(id: any, idProduit: number, prix: number) {
+  //   if (id == null) {
+  //     this.toastr.error(
+  //       'Vous devez vous connecter pour ajouter au panier',
+  //       'Erreur',
+  //       {
+  //         timeOut: 3000,
+  //         progressBar: true,
+  //         progressAnimation: 'increasing',
+  //         positionClass: 'toast-top-right',
+  //       }
+  //     );
+  //     this._router.navigate(['/login']);
+  //   }
+  //   this.http
+  //     .post('api/panier/ajouterPanier', {
+  //       id: id,
+  //       idProduit: idProduit,
+  //       prix: prix,
+  //     })
+  //     .subscribe(
+  //       (data: any) => {
+  //         this.toastr.success(
+  //           'Produit ajouté au panier avec succès',
+  //           'Ajouté au panier',
+  //           {
+  //             timeOut: 3000,
+  //             progressBar: true,
+  //             progressAnimation: 'increasing',
+  //             positionClass: 'toast-top-right',
+  //           }
+  //         );
+  //         this.ngOnInit();
+  //         this.SocketIOServiceService.emit('idusercountprdouit', id);
+  //       },
+  //       (error: any) => {
+  //         if (error.status == 401) {
+  //           this.toastr.error('Produit déjà dans le panier', 'Erreur', {
+  //             timeOut: 3000,
+  //             progressBar: true,
+  //             progressAnimation: 'increasing',
+  //             positionClass: 'toast-top-right',
+  //           });
 
-          }else if (error.status == 400) {
-            this.toastr.error('Produit hors stock', 'Erreur', {
-              timeOut: 3000,
-              progressBar: true,
-              progressAnimation: 'increasing',
-              positionClass: 'toast-top-right',
-            });
+  //         }else if (error.status == 400) {
+  //           this.toastr.error('Produit hors stock', 'Erreur', {
+  //             timeOut: 3000,
+  //             progressBar: true,
+  //             progressAnimation: 'increasing',
+  //             positionClass: 'toast-top-right',
+  //           });
 
-          }
-          else{
-            this.toastr.warning('Serveur indisponible', 'Erreur', {
-              timeOut: 3000,
-              progressBar: true,
-              progressAnimation: 'increasing',
-              positionClass: 'toast-top-right',
-            });
-          }
+  //         }
+  //         else{
+  //           this.toastr.warning('Serveur indisponible', 'Erreur', {
+  //             timeOut: 3000,
+  //             progressBar: true,
+  //             progressAnimation: 'increasing',
+  //             positionClass: 'toast-top-right',
+  //           });
+  //         }
 
-        }
-      );
-  }
+  //       }
+  //     );
+  // }
+  
   jaime(id: number, idProduit: number) {
     if (this.message == null) {
       this.toastr.error('Vous devez vous connecter', 'Erreur', {
@@ -473,35 +409,137 @@ export class SinglepageProductComponent implements OnInit {
     );
   }
 
-  onAddToCart(attributeSet: any[]) {
-    console.log("Adding to cart:", attributeSet);
-  
-    // Créer l'objet CartItem avec une quantité de 1 et l'ensemble d'attributs spécifique
-    const cartItem: CartItem = {
-      name: this.data.name,
-      price: this.data.price,
-      quantity: 1,
-      id: this.data._id,
-      category: this.data.category,
-      description: this.data.description,
-      image: this.data.image,
-      vendorId: this.data.vendorId,
-      attributes: attributeSet, // Ajoutez l'ensemble d'attributs au panier
-    };
-  
-    const vendorId = this.data.vendorId;
-  
-    // Appel du service pour ajouter au panier
-    this.cartService.addToCart(cartItem, vendorId);
-    this.cdr.detectChanges(); // Force la mise à jour de la vue
 
-      this.toastr.success('Produit ajouté au panier', '', {
-        timeOut: 1500,
-        progressAnimation: 'increasing',
-        progressBar: true,
-        positionClass: 'toast-top-right',
-      });
-      Emitters.authEmitter2.emit(true);
+  checkAuthentication(): void {
+    // Essayer d'abord de récupérer l'ID depuis le token JWT
+    this.userId = this.authService.getUserIdFromToken();
+    
+    // Si pas trouvé dans le token, essayer localStorage
+    if (!this.userId) {
+      const storedUserId = localStorage.getItem('user_id');
+      this.userId = storedUserId ? parseInt(storedUserId) : null;
+    }
+    
+    // Vérifier si l'utilisateur est connecté
+    if (this.userId) {
+      this.authenticated = true;
+    } else {
+      // Si toujours pas d'ID, vérifier auprès du serveur
+      this.http.get('http://localhost:9090/api/auth/getUser', { withCredentials: true }).subscribe(
+        (user: any) => {
+          if (user && user.id) {
+            this.authenticated = true;
+            this.userId = user.id;
+            // Optionnel: sauvegarder dans localStorage pour usage futur
+            localStorage.setItem('user_id', user.id.toString());
+          } else {
+            this.authenticated = false;
+            this.userId = null;
+          }
+        },
+        (error) => {
+          this.authenticated = false;
+          this.userId = null;
+        }
+      );
+    }
   }
+
+ajouterAuPanier(): void {
+  let currentUserId = this.userId;
+  
+  if (!currentUserId) {
+    currentUserId = this.authService.getUserIdFromToken();
+    
+    if (!currentUserId) {
+      const storedUserId = localStorage.getItem('user_id');
+      currentUserId = storedUserId ? parseInt(storedUserId) : null;
+    }
+  }
+
+  if (!currentUserId) {
+    this.toastr.warning('Veuillez vous connecter pour ajouter des produits au panier');
+    this.router.navigate(['/login']);
+    return;
+  }
+
+  if (!this.data || !this.data.id) {
+    this.toastr.error('Erreur: Données du produit non disponibles');
+    return;
+  }
+
+  if (!this.data.quantite || this.data.quantite <= 0) {
+    this.toastr.error('Produit en rupture de stock');
+    return;
+  }
+
+  this.http.post(`http://localhost:9090/api/cart/add`, null, {
+    params: {
+      userId: currentUserId.toString(),
+      productId: this.data.id.toString(),
+      quantity: '1'
+    }
+  }).subscribe(
+    (response: any) => {
+      this.toastr.success('Produit ajouté au panier avec succès');
+      
+      // Vérification de currentUserId avant l'appel
+      if (currentUserId !== null) {
+        this.refreshCart(currentUserId);
+        this.SocketIOServiceService.emit('updateCart', currentUserId);
+      }
+    },
+    (error) => {
+      if (error.status === 400) {
+        this.toastr.error('Stock insuffisant ou erreur lors de l\'ajout au panier');
+      } else {
+        this.toastr.error('Erreur lors de l\'ajout au panier');
+      }
+      console.error('Erreur:', error);
+    }
+  );
+}
+
+// Changez le paramètre pour accepter number (pas null)
+refreshCart(userId: number): void {
+  this.http.get(`http://localhost:9090/api/cart/${userId}`, {
+    responseType: 'text' // Récupérer comme texte d'abord
+  }).subscribe({
+    next: (response: string) => {
+      try {
+        // Essayer de parser le JSON
+        const cartData = JSON.parse(response);
+        console.log('Données du panier reçues:', cartData);
+        
+        let items: CartItem[] = [];
+        
+        if (cartData && Array.isArray(cartData.items)) {
+          items = cartData.items.map((item: any) => ({
+            id: item.productId || item.id,
+            name: item.productName || item.name,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+            category: item.category,
+            description: item.description,
+            vendorId: item.vendorId
+          }));
+        }
+        
+        const cart: Cart = { items };
+        this.cartService.updateCart(cart);
+      } catch (e) {
+        console.error('Erreur de parsing JSON:', e);
+        console.error('Réponse brute:', response);
+        // Panier vide en cas d'erreur
+        this.cartService.updateCart({ items: [] });
+      }
+    },
+    error: (error) => {
+      console.error('Erreur HTTP:', error);
+      this.cartService.updateCart({ items: [] });
+    }
+  });
+}
 
 }

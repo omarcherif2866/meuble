@@ -199,6 +199,31 @@
 <!-- Tab product end -->
 
 
+<!-- All category begin -->
+
+<div class="title1 section-t-space">
+  <h4>Nos Categories</h4>
+  <h2 class="title-inner1">everyday casual</h2>
+</div>
+<section class="category-section">
+  <div class="category-circle-container">
+    <div
+      class="category-circle"
+      *ngFor="let category of filteredCategorys"
+      (click)="onCategoryClick(category)">
+
+      
+
+      <img [src]="category.image" class="category-image" />
+      <span class="category-name">{{ category.name }}</span>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- All category end -->
+
 <!-- service layout -->
 <div class="container">
   <section class="service border-section small-section">

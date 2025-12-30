@@ -3,7 +3,7 @@
 ==========================**/
 .card-details-title {
     margin-bottom: 10px;
-    background: var(--theme-color);
+    background: var(--primary);
     background: linear-gradient(90deg, rgba($theme-color, 0.2) 0%, rgba($theme-color, 0) 80%);
     padding: 20px 10px;
     border-radius: 5px;
@@ -15,7 +15,7 @@
         font-weight: bolder;
 
         span {
-            color: var(--theme-color);
+            color: var(--primary);
         }
     }
 }
@@ -169,7 +169,7 @@ table {
                         }
 
                         &.fa-trash-alt {
-                            color: var(--theme-color);
+                            color: var(--primary);
                             margin-left: 10px;
                         }
                     }
@@ -182,8 +182,8 @@ table {
                 &.order-cancle {
                     span {
                         background-color: rgba($color: $theme-color, $alpha: .1);
-                        color: var(--theme-color);
-                        border: 1px solid var(--theme-color);
+                        color: var(--primary);
+                        border: 1px solid var(--primary);
                         padding: 5px 10px;
                         border-radius: 5px;
                         font-size: 12px;
@@ -314,7 +314,7 @@ table {
                 &:nth-child(2),
                 &:nth-child(5) {
                     font-weight: 800;
-                    color: var(--theme-color);
+                    color: var(--primary);
                 }
 
                 &:nth-child(2),
@@ -427,7 +427,7 @@ table {
                 &.td-cross {
                     .feather {
                         font-size: 20px !important;
-                        stroke: var(--theme-color) !important;
+                        stroke: var(--primary) !important;
                     }
                 }
 
@@ -470,7 +470,7 @@ table {
                 &.status-danger {
                     span {
                         background-color: rgba($color: #e22454, $alpha: .15);
-                        color: var(--theme-color);
+                        color: var(--primary);
                         padding: 5px 10px;
                         text-transform: capitalize;
                         display: inline-block;
@@ -572,7 +572,7 @@ table {
                             }
 
                             &:checked {
-                                background-color: var(--theme-color);
+                                background-color: var(--primary);
                             }
                         }
                     }
@@ -629,7 +629,7 @@ table {
                             }
 
                             &:checked {
-                                background-color: var(--theme-color);
+                                background-color: var(--primary);
                             }
                         }
                     }
@@ -788,7 +788,7 @@ table {
                             }
 
                             &:checked {
-                                background-color: var(--theme-color);
+                                background-color: var(--primary);
                             }
                         }
                     }
@@ -828,7 +828,7 @@ table {
                             }
 
                             &:checked {
-                                background-color: var(--theme-color);
+                                background-color: var(--primary);
                             }
                         }
                     }
@@ -886,7 +886,7 @@ table {
             &:last-child {
                 td {
                     h5 {
-                        color: var(--theme-color) !important;
+                        color: var(--primary) !important;
                         font-weight: 800;
                     }
                 }
@@ -1288,7 +1288,7 @@ table {
 
 .button-small {
     .fa-trash-alt {
-        color: var(--theme-color);
+        color: var(--primary);
         margin-left: 10px;
     }
 
@@ -1365,7 +1365,7 @@ table {
                 text-align: left;
 
                 span {
-                    color: var(--theme-color);
+                    color: var(--primary);
                 }
 
                 &:first-child {
